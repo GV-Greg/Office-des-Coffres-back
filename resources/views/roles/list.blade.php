@@ -16,7 +16,9 @@
                     </button>
                 </div>
                 <div class="w-full md:w-1/3 mt-3 md:mt-1 md:mr-2 flex justify-center md:justify-end">
-                    <a class="btn btn-create" href="{{ route('role.create') }}">{{ __('Create a role') }}</a>
+                    @can('role-crud')
+                        <a class="btn btn-create" href="{{ route('role.create') }}">{{ __('Create a role') }}</a>
+                    @endcan
                 </div>
             </div>
             <table class="mt-5 md:mt-0 w-full md:w-1/2">
@@ -34,10 +36,8 @@
                         <td class="font-bold">{{$role->name}}</td>
                         <td class="text-center">
                             <a class="btn-show" href="{{ route('role.show',$role->id) }}"><i class="fa fa-fw fa-eye"></i><span class="hidden md:inline-block md:ml-1">{{ __('Show') }}</span></a>
-                            @can('role-edit')
+                            @can('role-crud')
                                 <a class="btn-edit" href="{{ route('role.edit',$role->id) }}"><i class="fa fa-fw fa-edit"></i><span class="hidden md:inline-block md:ml-1">{{ __('Edit') }}</span></a>
-                            @endcan
-                            @can('role-delete')
                                 <form action="{{ route('role.destroy',$role->id) }}" method="POST" class="hidden md:inline-block md:ml-1">
                                     @csrf
                                     {{ method_field('DELETE') }}

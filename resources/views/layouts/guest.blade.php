@@ -17,6 +17,7 @@
         <script src="{{ asset('js/app.js') }}" defer></script>
     </head>
     <body class="bg-gray-800">
+        @include('sweetalert::alert')
         <div class="font-sans text-gray-900 antialiased">
             {{ $slot }}
         </div>

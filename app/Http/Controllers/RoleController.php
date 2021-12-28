@@ -10,7 +10,7 @@ use Spatie\Permission\Models\Role;
 
 class RoleController extends Controller
 {
-    function __construct()
+    public function __construct()
     {
         $this->middleware('permission:role-crud');
     }

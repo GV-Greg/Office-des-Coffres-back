@@ -17,6 +17,7 @@
         <script src="{{ asset('js/app.js') }}" defer></script>
     </head>
     <body class="font-sans antialiased bg-gray-800">
+        @include('sweetalert::alert')
         <div class="min-h-screen">
             @include('layouts.navigation')
 

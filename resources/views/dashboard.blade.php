@@ -4,11 +4,7 @@
     </x-slot>
 
     <x-content-card>
-        @if ($message = Session::get('success'))
-            <div class="alert alert-success">
-                <p>{{ $message }}</p>
-            </div>
-        @endif
+
         <div class="grid grid-cols-1">
             <h3 class="text-2xl text-left">{{ __('List of non-validated players') }}</h3>
             <table class="mt-5 md:mt-0 w-full">

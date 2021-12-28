@@ -12,9 +12,9 @@ use Illuminate\Validation\Rules\Password;
 
 class UserController extends BaseController
 {
-    function __construct()
+    public function __construct()
     {
-        $this->middleware('permission:user-crud');
+        $this->middleware('permission:player-crud');
 //        $this->middleware('permission:user-list', ['only' => ['index']]);
 //        $this->middleware('permission:user-create', ['only' => ['create','store']]);
 //        $this->middleware('permission:user-edit', ['only' => ['edit','update']]);

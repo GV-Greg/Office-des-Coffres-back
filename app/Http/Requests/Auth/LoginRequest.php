@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class LoginRequest extends FormRequest
 {
@@ -47,6 +48,8 @@ class LoginRequest extends FormRequest
 
         if (! Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
             RateLimiter::hit($this->throttleKey());
+
+            Alert::error('Mauvais mot de passe', "Le mot de passe ne correspond pas à l'email.");
 
             throw ValidationException::withMessages([
                 'email' => __('auth.failed'),

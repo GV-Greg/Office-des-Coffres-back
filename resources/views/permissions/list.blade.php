@@ -16,7 +16,9 @@
                     </button>
                 </div>
                 <div class="w-full md:w-1/3 mt-3 md:mt-1 md:mr-2 flex justify-center md:justify-end">
-                    <a class="btn btn-create" href="{{ route('permission.create') }}">{{ __('Create a permission') }}</a>
+                    @can('permission-crud')
+                        <a class="btn btn-create" href="{{ route('permission.create') }}">{{ __('Create a permission') }}</a>
+                    @endcan
                 </div>
             </div>
             <table class="mt-5 md:mt-0 w-full md:w-1/2">
@@ -33,10 +35,8 @@
                         <th class="hidden md:table-cell">{{ $permission->id }}</th>
                         <td class="font-bold">{{$permission->name}}</td>
                         <td class="text-center">
-                            @can('role-edit')
+                            @can('permission-crud')
                                 <a class="btn-edit" href="{{ route('permission.edit',$permission->id) }}"><i class="fa fa-fw fa-edit"></i><span class="hidden md:inline-block md:ml-1">{{ __('Edit') }}</span></a>
-                            @endcan
-                            @can('role-delete')
                                 <form action="{{ route('permission.destroy',$permission->id) }}" method="POST" class="hidden md:inline-block md:ml-1">
                                     @csrf
                                     {{ method_field('DELETE') }}

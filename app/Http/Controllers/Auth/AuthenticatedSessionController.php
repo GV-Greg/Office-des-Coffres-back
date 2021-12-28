@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\API\BaseController as BaseController;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
+use RealRashid\SweetAlert\Facades\Alert;
 
-class AuthenticatedSessionController extends Controller
+class AuthenticatedSessionController extends BaseController
 {
     /**
      * Display the login view.
@@ -25,11 +27,28 @@ class AuthenticatedSessionController extends Controller
      * Handle an incoming authentication request.
      *
      * @param  \App\Http\Requests\Auth\LoginRequest  $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
     public function store(LoginRequest $request)
     {
-        $request->authenticate();
+        $user = User::where('email', $request->email)->first();
+
+        if($user) {
+            if($user->hasRole('Admin')) {
+                if($user->is_validated === 1) {
+                    $request->authenticate();
+                } else {
+                    Alert::error('Compte non validé', "Votre compte n'est pas validé.");
+                    return back()->with('error', "Votre compte n'est pas validé.");
+                }
+            } else {
+                Alert::error('Compte non autorisé', "Vous n'avez pas de compte Administrateur.");
+                return back()->with('error', "Compte non autorisé.");
+            }
+        } else {
+            Alert::error('Compte inexistant', "Pas de compte avec cet email.");
+            return back()->with('error', "Compte inexistant.");
+        }
 
         $request->session()->regenerate();
 

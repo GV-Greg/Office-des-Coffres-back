@@ -16,7 +16,9 @@
                     </button>
                 </div>
                 <div class="w-full md:w-1/3 mt-3 md:mt-1 md:mr-2 flex justify-center md:justify-end">
-                    <a class="btn btn-create" href="{{ route('player.create') }}">{{ __('Create a player') }}</a>
+                    @can('player-crud')
+                        <a class="btn btn-create" href="{{ route('player.create') }}">{{ __('Create a player') }}</a>
+                    @endcan
                 </div>
             </div>
             <table class="mt-5 md:mt-0 w-full">
@@ -45,13 +47,15 @@
                             @endif
                         </td>
                         <td class="text-center">
-                            <a class="btn-show" href="{{ route('player.show',$player->id) }}"><i class="fa fa-fw fa-eye"></i><span class="hidden md:inline-block md:ml-1">{{ __('Show') }}</span></a>
-                            <a class="btn-edit" href="{{ route('player.edit',$player->id) }}"><i class="fa fa-fw fa-edit"></i><span class="hidden md:inline-block md:ml-1">{{ __('Edit') }}</span></a>
-                            <form action="{{ route('player.destroy',$player->id) }}" method="POST" class="hidden md:inline-block md:ml-1">
-                                @csrf
-                                {{ method_field('DELETE') }}
-                                <button class="btn-delete"><i class="fa fa-fw fa-trash"></i><span>{{ __('Delete') }}</span></button>
-                            </form>
+                            @can('player-crud')
+                                <a class="btn-show" href="{{ route('player.show',$player->id) }}"><i class="fa fa-fw fa-eye"></i><span class="hidden md:inline-block md:ml-1">{{ __('Show') }}</span></a>
+                                <a class="btn-edit" href="{{ route('player.edit',$player->id) }}"><i class="fa fa-fw fa-edit"></i><span class="hidden md:inline-block md:ml-1">{{ __('Edit') }}</span></a>
+                                <form action="{{ route('player.destroy',$player->id) }}" method="POST" class="hidden md:inline-block md:ml-1">
+                                    @csrf
+                                    {{ method_field('DELETE') }}
+                                    <button class="btn-delete"><i class="fa fa-fw fa-trash"></i><span>{{ __('Delete') }}</span></button>
+                                </form>
+                            @endcan
                         </td>
                     </tr>
                 @endforeach
