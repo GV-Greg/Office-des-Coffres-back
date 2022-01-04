@@ -77,17 +77,18 @@ class AuthController extends BaseController
         }
     }
 
-    public function details()
+    public function check()
     {
-        $user = Auth::user();
-        return response()->json(['success' => $user], 200);
+        $user = Auth::user()->first();
+        $userRoles = $user->getRoleNames();
+
+        return response()->json(['success' => $user, 'userRoles' => $userRoles], 200);
     }
 
 
     public function logout(Request $request)
     {
         $request->user()->token()->revoke();
-//        auth()->user()->tokens()->delete();
 
         $success['data'] = 'Vous êtes déconnecté';
 

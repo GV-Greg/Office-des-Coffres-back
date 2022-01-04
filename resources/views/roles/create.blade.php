@@ -20,7 +20,7 @@
                         <span class="form-label">{{ __('Permissions') }}</span>
                         <div class="grid grid-cols-4">
                             @foreach($permissions as $key => $permission)
-                                <div class="form-check w-1/2">
+                                <div class="form-check w-full">
                                     <input type="checkbox" id="{{ $permission->name }}" name="permission[]" value="{{ $permission->id }}" class="form-check-input rounded text-blue-500">
                                     <label for="{{ $permission->name }}" class="form-check-label inline-block text-gray-800 ml-1">{{ $permission->name }}</label>
                                 </div>

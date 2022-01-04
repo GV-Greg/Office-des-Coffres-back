@@ -45,6 +45,8 @@ Route::middleware(['auth'])->group(function(){
         Route::post('/edit-player/{id}', [UserController::class, 'update'])->name('player.update');
         Route::delete('/delete-player/{id}', [UserController::class, 'destroy'])->name('player.destroy');
         Route::get('/change-status/{id}', [UserController::class, 'changeStatus'])->name('player.change.status');
+        Route::get('/add-role/{id}', [UserController::class, 'addRole'])->name('player.role.add');
+        Route::post('/add-role/{id}', [UserController::class, 'storeRole'])->name('player.role.store');
     });
 });
 

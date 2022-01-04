@@ -626,6 +626,10 @@ select {
   margin-top: 0.25rem;
   margin-bottom: 0.25rem;
 }
+.mx-5 {
+  margin-left: 1.25rem;
+  margin-right: 1.25rem;
+}
 .ml-3 {
   margin-left: 0.75rem;
 }
@@ -707,6 +711,9 @@ select {
 .-mt-px {
   margin-top: -1px;
 }
+.ml-5 {
+  margin-left: 1.25rem;
+}
 .block {
   display: block;
 }
@@ -778,6 +785,9 @@ select {
 }
 .w-48 {
   width: 12rem;
+}
+.w-3\/4 {
+  width: 75%;
 }
 .max-w-xl {
   max-width: 36rem;

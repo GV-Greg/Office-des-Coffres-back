@@ -33,8 +33,14 @@
                     </div>
                 </div>
             </div>
-            <div class="col-span-2">
-
+            <div class="col-span-2 mx-5 p-6 bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <h4>{{ __('Roles') }}</h4>
+                <a href="{{ route('player.role.add',$player->id) }}" class="btn btn-create">{{ __('Assign roles') }}</a>
+                <ul class="ml-5 mt-2">
+                    @foreach($player->roles as $role)
+                        <li class="list-disc">{{ $role->name }}</li>
+                    @endforeach
+                </ul>
             </div>
         </div>
     </div>

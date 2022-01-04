@@ -7,8 +7,8 @@ use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rules\Password;
+use Spatie\Permission\Models\Role;
 
 class UserController extends BaseController
 {
@@ -79,7 +79,7 @@ class UserController extends BaseController
      */
     public function edit(int $id)
     {
-        $player = User::findOrFail($id);
+        $player = User::where('id', $id)->with('roles')->first();
 
         return view('players.edit', compact('player'));
     }
@@ -136,5 +136,31 @@ class UserController extends BaseController
         $players = User::all();
 
         return redirect()->route('players.list', compact('players'));
+    }
+
+    /**
+     * @param int $id
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
+    public function addRole(int $id)
+    {
+        $player = User::where('id', $id)->first();
+        $roles = Role::all();
+        $playerRoles = $player->roles->pluck('id')->toArray();
+
+        return view('players.add-role', compact('player', 'roles', 'playerRoles'));
+    }
+
+    /**
+     * @param Request $request
+     * @param int $id
+     * @return RedirectResponse
+     */
+    public function storeRole(Request $request, int $id): RedirectResponse
+    {
+        $player = User::findOrFail($id);
+        $player->syncRoles($request->roles);
+
+        return redirect()->route('player.show', ['id' => $id, 'player' => $player])->with('success', 'Rôles mis à jour');
     }
 }
