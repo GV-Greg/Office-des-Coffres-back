@@ -60,7 +60,7 @@ class AuthController extends BaseController
         $user = User::where('pseudo', $request->pseudo)->first();
 
         if($user) {
-            if($user->is_validated === 1) {
+            if($user->is_validated === true) {
                 if (Auth::attempt(['pseudo' => $request->pseudo, 'password' => $request->password])) {
                     $user = Auth::user();
                     $success['token'] =  $user->createToken(config('app.name'))->accessToken;

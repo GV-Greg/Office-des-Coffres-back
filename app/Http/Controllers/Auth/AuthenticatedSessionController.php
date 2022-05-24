@@ -35,7 +35,7 @@ class AuthenticatedSessionController extends BaseController
 
         if($user) {
             if($user->hasRole('Admin')) {
-                if($user->is_validated === 1) {
+                if($user->is_validated === true) {
                     $request->authenticate();
                 } else {
                     Alert::error('Compte non validé', "Votre compte n'est pas validé.");
