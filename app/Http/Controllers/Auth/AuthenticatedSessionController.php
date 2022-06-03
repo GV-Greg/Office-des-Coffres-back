@@ -34,7 +34,7 @@ class AuthenticatedSessionController extends BaseController
         $user = User::where('email', $request->email)->first();
 
         if($user) {
-            if($user->hasRole('Admin')) {
+            if($user->hasRole('Admin') || $user->hasRole('FaSi Fest')) {
                 if($user->is_validated === true) {
                     $request->authenticate();
                 } else {

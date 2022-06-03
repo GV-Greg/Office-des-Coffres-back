@@ -1,4 +1,8 @@
 const mix = require('laravel-mix');
+const tailwindcss = require('tailwindcss');
+
+mix.setPublicPath('public');
+mix.setResourceRoot('../');
 
 /*
  |--------------------------------------------------------------------------
@@ -12,9 +16,10 @@ const mix = require('laravel-mix');
  */
 
 mix.js('resources/js/app.js', 'public/js')
-    .postCss('resources/css/app.css', 'public/css', [
-        require('postcss-import'),
-        require('tailwindcss'),
-        require('autoprefixer'),
-    ])
+    .js('resources/js/components/rewards.js', 'public/js')
+    .sass('resources/sass/app.scss', 'public/sass')
+    .options({
+        postCss: [ tailwindcss('./tailwind.config.js') ],
+    })
+    .version()
     .disableSuccessNotifications();

@@ -20,7 +20,7 @@ class AuthController extends BaseController
     public function register(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'pseudo' => 'required|max:191|unique:users',
+            'username' => 'required|max:191|unique:users',
             'email' => 'required|email|max:191|unique:users',
             'password' => 'required|min:8|max:191',
             'confirmation' => 'required|min:8|max:191|same:password'
@@ -31,13 +31,13 @@ class AuthController extends BaseController
         }
 
         $user = User::create([
-            'pseudo' => $request->pseudo,
+            'username' => $request->username,
             'email' => $request->email,
             'password' => Hash::make($request->password)
         ]);
 
         $success['token'] =  $user->createToken(config('app.name'))->accessToken;
-        $success['pseudo'] =  $user->pseudo;
+        $success['username'] =  $user->username;
 
         return $this->sendResponse($success, 'Inscription réussie.');
     }
@@ -49,7 +49,7 @@ class AuthController extends BaseController
     public function login(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'pseudo' => 'required|max:191|exists:users,pseudo',
+            'username' => 'required|max:191|exists:users,username',
             'password' => 'required|min:8|max:191',
         ]);
 
@@ -57,14 +57,14 @@ class AuthController extends BaseController
             return $this->sendError('Connexion échouée.', $validator->errors());
         }
 
-        $user = User::where('pseudo', $request->pseudo)->first();
+        $user = User::where('username', $request->username)->first();
 
         if($user) {
             if($user->is_validated === true) {
-                if (Auth::attempt(['pseudo' => $request->pseudo, 'password' => $request->password])) {
+                if (Auth::attempt(['username' => $request->username, 'password' => $request->password])) {
                     $user = Auth::user();
                     $success['token'] =  $user->createToken(config('app.name'))->accessToken;
-                    $success['pseudo'] =  $user->pseudo;
+                    $success['username'] =  $user->username;
                     return $this->sendResponse($success, 'Connexion réussie.');
                 } else {
                     return $this->sendError('Mot de passe incorrect', ['password' => "Le mot de passe est incorrect."]);

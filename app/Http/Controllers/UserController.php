@@ -12,13 +12,10 @@ use Spatie\Permission\Models\Role;
 
 class UserController extends BaseController
 {
+
     public function __construct()
     {
         $this->middleware('permission:player-crud');
-//        $this->middleware('permission:user-list', ['only' => ['index']]);
-//        $this->middleware('permission:user-create', ['only' => ['create','store']]);
-//        $this->middleware('permission:user-edit', ['only' => ['edit','update']]);
-//        $this->middleware('permission:user-delete', ['only' => ['destroy']]);
     }
 
     /**
@@ -46,20 +43,20 @@ class UserController extends BaseController
     public function store(Request $request)
     {
         $request->validate([
-            'pseudo' => ['required', 'string', 'max:191', 'unique:users,pseudo'],
+            'username' => ['required', 'string', 'max:191', 'unique:users,username'],
             'email' => ['required', 'string', 'max:191', 'unique:users,email'],
             'password' => ['required', Password::defaults()],
         ]);
 
         User::create([
-            'pseudo' => $request->pseudo,
+            'username' => $request->username,
             'email' => $request->email,
             'password' => Hash::make($request->password)
         ]);
 
         $players = User::all();
 
-        return redirect()->route('players.list', compact('players'))->with('success', 'Joueur créé');
+        return redirect()->route('players.list', compact('players'))->with('toast_success', __('Player created'));
     }
 
     /**
@@ -92,13 +89,13 @@ class UserController extends BaseController
     public function update(Request $request, int $id)
     {
         $request->validate([
-            'pseudo' => ['required', 'string', 'max:191', 'unique:users,pseudo,'.$id],
+            'username' => ['required', 'string', 'max:191', 'unique:users,username,'.$id],
             'email' => ['required', 'string', 'max:191', 'unique:users,email,'.$id],
             'password' => ['nullable', Password::defaults()],
         ]);
 
         $player = User::findOrFail($id);
-        $player->pseudo = $request->pseudo;
+        $player->username = $request->username;
         $player->email = $request->email;
         if($request->password !== null){
             $player->password = Hash::make($request->password);
@@ -107,7 +104,7 @@ class UserController extends BaseController
 
         $players = User::all();
 
-        return redirect()->route('players.list', compact('players'))->with('success', 'Joueur mis à jour');
+        return redirect()->route('players.list', compact('players'))->with('toast_success', __('Player updated'));
     }
 
     /**
@@ -118,7 +115,7 @@ class UserController extends BaseController
     {
         User::findOrFail($id)->delete();
 
-        return redirect()->route('players.list');
+        return redirect()->route('players.list')->with('toast_success', __('Player deleted'));
     }
 
     /**
@@ -135,7 +132,7 @@ class UserController extends BaseController
 
         $players = User::all();
 
-        return redirect()->route('players.list', compact('players'));
+        return redirect()->route('players.list', compact('players'))->with('toast_success', __('Player status changed'));
     }
 
     /**
@@ -161,6 +158,6 @@ class UserController extends BaseController
         $player = User::findOrFail($id);
         $player->syncRoles($request->roles);
 
-        return redirect()->route('player.show', ['id' => $id, 'player' => $player])->with('success', 'Rôles mis à jour');
+        return redirect()->route('player.show', ['id' => $id, 'player' => $player])->with('toast_success', __('Player roles updated'));
     }
 }

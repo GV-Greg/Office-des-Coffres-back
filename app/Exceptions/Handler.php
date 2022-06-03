@@ -3,6 +3,8 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use RealRashid\SweetAlert\Facades\Alert;
+use Spatie\Permission\Exceptions\UnauthorizedException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -37,5 +39,20 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e) {
             //
         });
+    }
+
+    /**
+     * @param $request
+     * @param Throwable $e
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\JsonResponse|\Illuminate\Http\Response|\Symfony\Component\HttpFoundation\Response
+     * @throws Throwable
+     */
+    public function render($request, Throwable $e)
+    {
+        if ($e instanceof UnauthorizedException) {
+            Alert::warning(__('Access denied'), __("You are not authorised to access this page"));
+            return redirect()->to('dashboard');
+        }
+        return parent::render($request, $e);
     }
 }

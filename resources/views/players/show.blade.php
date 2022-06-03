@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        {{ __("Player's card") }} {{ $player->pseudo }}
+        {{ __("Player's card") }} {{ $player->username }}
     </x-slot>
 
     <div class="md:py-3 ml-14">
@@ -11,7 +11,7 @@
                         <i class="fas fa-circle fa-stack-2x" style="color:dodgerblue"></i>
                         <i class="fas fa-user-alt fa-stack-1x fa-inverse"></i>
                     </span>
-                    <h3 class="text-4xl">{{ $player->pseudo }}</h3>
+                    <h3 class="text-4xl">{{ $player->username }}</h3>
                     @if($player->is_validated)
                         <span class="ml-3 -mt-4 px-2 pt-1 pb-1.5 rounded bg-green-500 text-white uppercase font-bold">{{ __('Validated') }}</span>
                     @else

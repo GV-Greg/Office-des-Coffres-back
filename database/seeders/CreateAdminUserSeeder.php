@@ -18,7 +18,7 @@ class CreateAdminUserSeeder extends Seeder
     public function run()
     {
         $user = User::create([
-            'pseudo' => 'Artifice',
+            'username' => 'Artifice',
             'email' => 'gregvandenbergh@gmail.com',
             'password' => Hash::make('rootroot'),
             'is_validated' => 1,

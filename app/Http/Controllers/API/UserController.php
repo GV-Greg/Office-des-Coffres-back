@@ -39,7 +39,7 @@ class UserController extends BaseController
     public function store(Request $request)
     {
         $player = new User();
-        $player->pseudo = $request->input('pseudo');
+        $player->username = $request->input('username');
         $player->email = $request->input('email');
         $player->password = Hash::make($request->input('password'));
         $player->save();
@@ -62,6 +62,12 @@ class UserController extends BaseController
     public function update(Request $request, int $id)
     {
         $player = User::findOrFail($id);
+        $player->username = $request->input('username');
+        $player->email = $request->input('email');
+        if($request->input('password')) {
+            $player->password = Hash::make($request->input('password'));
+        }
+        $player->save();
 
         return $this->sendResponse($player, 'Joueur mis à jour.');
     }

@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\Modules\Anim\RewardsGridController;
+use App\Http\Controllers\Modules\Anim\RewardsListController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
@@ -13,6 +15,8 @@ Route::get('/', function () {
 Route::middleware(['auth'])->group(function(){
 
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    /* Page de test pour page non autorisée */
+    Route::get('test', [DashboardController::class, 'test'])->name('test');
 
     /*  Gestion des permissions  */
     Route::prefix('permissions')->group( function() {
@@ -48,6 +52,27 @@ Route::middleware(['auth'])->group(function(){
         Route::get('/add-role/{id}', [UserController::class, 'addRole'])->name('player.role.add');
         Route::post('/store-role/{id}', [UserController::class, 'storeRole'])->name('player.role.store');
     });
+
+    /* Animation */
+        /* Gestion des grilles de lots */
+        Route::prefix('anim')->group( function() {
+            Route::prefix('grid-rewards')->group( function () {
+               Route::get('', [RewardsGridController::class, 'index'])->name('anim.grids.rewards.list');
+               Route::get('/add-grid', [RewardsGridController::class, 'create'])->name('anim.grid.rewards.create');
+               Route::post('/add-grid', [RewardsGridController::class, 'store'])->name('anim.grid.rewards.store');
+               Route::get('/show-grid/{id}', [RewardsGridController::class, 'show'])->name('anim.grid.rewards.show');
+               Route::get('/edit-grid/{id}', [RewardsGridController::class, 'edit'])->name('anim.grid.rewards.edit');
+               Route::post('/edit-grid/{id}', [RewardsGridController::class, 'update'])->name('anim.grid.rewards.update');
+                Route::get('/confirm/{id}', [RewardsGridController::class, 'confirm'])->name('anim.grid.rewards.confirm');
+                Route::delete('/delete-grid/{id}', [RewardsGridController::class, 'destroy'])->name('anim.grid.rewards.destroy');
+               /* Gestion des lots */
+               Route::post('/add-reward', [RewardsListController::class, 'add'])->name('anim.grid.rewards.add');
+               Route::get('/draw/{id}', [RewardsListController::class, 'draw'])->name('anim.grid.rewards.draw');
+               Route::delete('/delete-group-rewards/{id}/{name}', [RewardsListController::class, 'destroy'])->name('anim.grid.rewards.group.destroy');
+               Route::post('/give-award/{id}', [RewardsListController::class, 'give'])->name('anim.grid.rewards.give');
+            });
+        });
+
 });
 
 require __DIR__.'/auth.php';

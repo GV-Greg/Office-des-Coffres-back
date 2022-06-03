@@ -20,6 +20,8 @@ class PermissionTableSeeder extends Seeder
             'permission-crud',
             'vit-art-crud',
             'vit-art-show',
+            'festival-crud',
+            'festival-show'
         ];
 
         foreach ($permissions as $permission) {

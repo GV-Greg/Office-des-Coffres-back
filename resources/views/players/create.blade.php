@@ -10,13 +10,13 @@
             @csrf
             <!-- Username -->
                 <div class="w-full">
-                    <x-label for="pseudo" :value="__('Username')" />
-                    <x-input id="pseudo" class="block mt-1 w-full" type="text" name="pseudo" :value="old('pseudo')" required autofocus />
-                    @error('pseudo')
+                    <x-label for="username" :value="__('Username')" />
+                    <x-input id="username" class="block mt-1 w-full" type="text" name="username" :value="old('username')" required autofocus />
+                    @error('username')
                         <p class="form-error">{{ $message }}</p>
                     @enderror
                 </div>
-                <!-- Email Address -->
+            <!-- Email Address -->
                 <div class="mt-4 w-full">
                     <x-label for="email" :value="__('Email')" />
                     <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus />
@@ -24,7 +24,7 @@
                         <p class="form-error">{{ $message }}</p>
                     @enderror
                 </div>
-                <!-- Password -->
+            <!-- Password -->
                 <div class="mt-4 w-full">
                     <x-label for="password" :value="__('Password')" />
                     <x-input id="password" class="block mt-1 w-full" type="password" name="password" autocomplete="current-password" />
@@ -32,7 +32,7 @@
                         <p class="form-error">{{ $message }}</p>
                     @enderror
                 </div>
-                <!-- Button -->
+            <!-- Button -->
                 <div class="mt-8 mb-2 w-full text-center">
                     <button type="submit" class="btn btn-create">{{ __('Send') }}</button>
                 </div>

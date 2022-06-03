@@ -19,10 +19,10 @@
         <form method="POST" action="{{ route('register') }}">
             @csrf
 
-            <!-- Name -->
+            <!-- Username -->
             <div>
-                <x-label for="pseudo" :value="__('Username')" />
-                <x-input id="pseudo" class="block mt-1 w-full" type="text" name="pseudo" :value="old('pseudo')" required autofocus />
+                <x-label for="username" :value="__('Username')" />
+                <x-input id="username" class="block mt-1 w-full" type="text" name="username" :value="old('username')" required autofocus />
             </div>
 
             <!-- Email Address -->

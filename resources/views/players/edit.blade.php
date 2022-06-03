@@ -10,9 +10,9 @@
                 @csrf
                 <!-- Username -->
                 <div class="w-full">
-                    <x-label for="pseudo" :value="__('Username')" />
-                    <x-input id="pseudo" class="block mt-1 w-full" type="text" name="pseudo" :value="$player->pseudo" required autofocus />
-                    @error('pseudo')
+                    <x-label for="username" :value="__('Username')" />
+                    <x-input id="username" class="block mt-1 w-full" type="text" name="username" :value="$player->username" required autofocus />
+                    @error('username')
                         <p class="form-error">{{ $message }}</p>
                     @enderror
                 </div>

@@ -101,7 +101,7 @@ return [
     |--------------------------------------------------------------------------
     | Animation
     |--------------------------------------------------------------------------
-    | Custom animation with [Animate.css](https://daneden.github.io/animate.css/)
+    | Custom animation with [Animate.sass](https://daneden.github.io/animate.css/)
     | If set to false, modal CSS animation will be use default ones.
     | For specific modal just use the animation() helper method.
     |
@@ -111,7 +111,7 @@ return [
         'enable' => env('SWEET_ALERT_ANIMATION_ENABLE', false),
     ],
 
-    'animatecss' => env('SWEET_ALERT_ANIMATECSS', 'https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css'),
+    'animatecss' => env('SWEET_ALERT_ANIMATECSS', 'https://cdnjs.cloudflare.com/ajax/libs/animate.sass/4.1.1/animate.min.sass'),
 
     /*
     |--------------------------------------------------------------------------
@@ -193,7 +193,6 @@ return [
     */
 
     'customClass' => [
-
         'container' => env('SWEET_ALERT_CONTAINER_CLASS'),
         'popup' => env('SWEET_ALERT_POPUP_CLASS'),
         'header' => env('SWEET_ALERT_HEADER_CLASS'),
