@@ -46,6 +46,11 @@ class User extends Authenticatable
         'is_validated' => 'boolean',
     ];
 
+    /**
+     * Verify if authenticated user have the Admin role
+     *
+     * @return mixed
+     */
     public function isAdmin()
     {
         return Auth::user()->hasRole('Admin');
@@ -62,14 +67,12 @@ class User extends Authenticatable
     }
 
     /**
-     * Get the creator's grids
+     * Get the creator's code activity
      *
      * @return HasMany
      */
-    public function rewards(): HasMany
+    public function activitiesCode(): HasMany
     {
-        return $this->hasMany(AnimRewardsList::class, 'player_id');
+        return $this->hasMany(AnimCodeActivity::class, 'code_activity_id');
     }
-
-
 }

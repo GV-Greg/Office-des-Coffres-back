@@ -1,6 +1,9 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\Modules\Anim\ActivityDecodeCodesController;
+use App\Http\Controllers\Modules\Anim\ActivityDecodeController;
+use App\Http\Controllers\Modules\Anim\ActivityDecodeProposalsController;
 use App\Http\Controllers\Modules\Anim\RewardsGridController;
 use App\Http\Controllers\Modules\Anim\RewardsListController;
 use App\Http\Controllers\PermissionController;
@@ -54,9 +57,9 @@ Route::middleware(['auth'])->group(function(){
     });
 
     /* Animation */
-        /* Gestion des grilles de lots */
         Route::prefix('anim')->group( function() {
-            Route::prefix('grid-rewards')->group( function () {
+            /* Gestion des grilles de lots */
+            Route::prefix('grid-rewards')->group( function() {
                Route::get('', [RewardsGridController::class, 'index'])->name('anim.grids.rewards.list');
                Route::get('/add-grid', [RewardsGridController::class, 'create'])->name('anim.grid.rewards.create');
                Route::post('/add-grid', [RewardsGridController::class, 'store'])->name('anim.grid.rewards.store');
@@ -70,6 +73,21 @@ Route::middleware(['auth'])->group(function(){
                Route::get('/draw/{id}', [RewardsListController::class, 'draw'])->name('anim.grid.rewards.draw');
                Route::delete('/delete-group-rewards/{id}/{name}', [RewardsListController::class, 'destroy'])->name('anim.grid.rewards.group.destroy');
                Route::post('/give-award/{id}', [RewardsListController::class, 'give'])->name('anim.grid.rewards.give');
+            });
+
+            /* Gestion du module "Décode le decode" */
+            Route::prefix('decode')->group( function() {
+                Route::get('', [ActivityDecodeController::class, 'index'])->name('anim.decode.list');
+                Route::get('/add-code-activity', [ActivityDecodeController::class, 'create'])->name('anim.decode.create');
+                Route::post('/add-code-activity', [ActivityDecodeController::class, 'store'])->name('anim.decode.store');
+                Route::get('/show-code-activity/{id}', [ActivityDecodeController::class, 'show'])->name('anim.decode.show-activity');
+                Route::get('/edit-code-activity/{id}', [ActivityDecodeController::class, 'edit'])->name('anim.decode.edit');
+                Route::post('/edit-code-activity/{id}', [ActivityDecodeController::class, 'update'])->name('anim.decode.update');
+                Route::delete('/delete-code-activity/{id}', [ActivityDecodeController::class, 'destroy'])->name('anim.decode.destroy');
+                /* Gestion du code */
+                Route::post('/create-code', [ActivityDecodeCodesController::class, 'create'])->name('anim.decode.create.code');
+                Route::get('/show-code/{id}', [ActivityDecodeCodesController::class, 'show'])->name('anim.decode.show-code');
+                Route::post('/verify/{id}', [ActivityDecodeProposalsController::class, 'verify'])->name('anim.decode.verify');
             });
         });
 

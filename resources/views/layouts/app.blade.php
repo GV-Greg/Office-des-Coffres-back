@@ -7,6 +7,9 @@
 
         <title>{{ config('app.name', 'Laravel') }}</title>
 
+        <!-- Favicon -->
+        <link rel="icon" href="{{ url('favicon.ico') }}">
+
         <!-- Fonts -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
 
@@ -15,6 +18,9 @@
 
         <!-- Scripts -->
         <script src="{{ asset('js/app.js') }}" defer></script>
+        <script type="text/javascript">
+            let app_url = "{{ env('APP_URL') }}";
+        </script>
         @stack('script')
     </head>
     <body class="font-sans antialiased bg-gray-800">
@@ -37,5 +43,7 @@
                 {{ $slot }}
             </main>
         </div>
+
+
     </body>
 </html>

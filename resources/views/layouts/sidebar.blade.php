@@ -23,4 +23,9 @@
             <i class="fa-solid fa-chess-board"></i>
         </x-nav-link-sidebar>
     @endcan
+    @can('code-crud')
+        <x-nav-link-sidebar :href="route('anim.decode.list')" :active="request()->is('anim/decode*')">
+            <i class="fa-solid fa-lock"></i>
+        </x-nav-link-sidebar>
+    @endcan
 </nav>

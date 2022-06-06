@@ -4,8 +4,6 @@ namespace App\Http\Controllers\Modules\Anim;
 
 use App\Http\Controllers\Controller;
 use App\Models\AnimRewardsGrid;
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -20,10 +18,11 @@ class RewardsGridController extends Controller
         $this->middleware('permission:festival-show', ['only' => 'index', 'show']);
         $this->middleware('permission:festival-edit', ['edit', 'update', 'destroy']);
     }
+
     /**
      * Display a listing of the resource.
      *
-     * @return Application|Factory|View
+     * @return View
      */
     public function index()
     {
@@ -35,7 +34,7 @@ class RewardsGridController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return Application|Factory|View
+     * @return View
      */
     public function create()
     {
@@ -71,7 +70,7 @@ class RewardsGridController extends Controller
      * Display the specified resource.
      *
      * @param int $id
-     * @return Application|Factory|View
+     * @return View
      */
     public function show(int $id): View
     {
@@ -120,6 +119,10 @@ class RewardsGridController extends Controller
         return redirect()->route('anim.grid.rewards.show', $grid_id)->with('toast_success', __('Grid updated'));
     }
 
+    /**
+     * @param int $id
+     * @return RedirectResponse
+     */
     public function confirm(int $id): RedirectResponse{
         AnimRewardsGrid::where('id',$id)->update([
             'status' => 'confirmed'

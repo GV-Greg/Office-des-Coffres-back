@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAnimRewardsGridsTable extends Migration
+class CreateAnimCodeActivityTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,11 @@ class CreateAnimRewardsGridsTable extends Migration
      */
     public function up()
     {
-        Schema::create('anim_rewards_grids', function (Blueprint $table) {
+        Schema::create('anim_code_activity', function (Blueprint $table) {
             $table->id();
             $table->string('name', 190);
             $table->unsignedBigInteger('creator_id');
-            $table->integer('width');
-            $table->integer('height');
-            $table->enum('status', ['new', 'incomplete', 'filled', 'drawed', 'confirmed', 'closed']);
+            $table->enum('status', ['new', 'relaunch', 'launched', 'closed']);
             $table->timestamps();
 
             $table->foreign('creator_id')->references('id')->on('users');
@@ -33,6 +31,6 @@ class CreateAnimRewardsGridsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('anim_rewards_grids');
+        Schema::dropIfExists('anim_code_activity');
     }
 }

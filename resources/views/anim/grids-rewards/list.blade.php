@@ -12,7 +12,7 @@
         @can('festival-show')
             <div class="mt-5 w-full grid grid-cols-6">
                 @forelse($grids as $grid)
-                    <div class="grid-rewards-card m-5 py-2" id="{{ 'grid' }}" data-id="{{ $grid->id }}">
+                    <div class="grid-rewards-card m-5 py-2" id="{{ 'grid' }}" data-grid-rewards-id="{{ $grid->id }}">
                         <div class="grid-rewards-header">
                             <i class="fa-solid fa-chess-board fa-2xl"></i>
                             <form action="{{ route('anim.grid.rewards.destroy',$grid->id) }}" method="POST" class="hidden md:inline-block md:ml-1">
@@ -41,7 +41,7 @@
                     </div>
                 @empty
                     <div class="mt-5 ml-5 italic">
-                        Aucune grille cr&eacute;e
+                        {{ __('No grid created') }}
                     </div>
                 @endforelse
             </div>
@@ -49,6 +49,6 @@
     </x-content-card>
 
     @push('script')
-        <script src="{{ asset('js/rewards.js') }}" defer></script>
+        <script src="{{ asset('js/scripts.js') }}" defer></script>
     @endpush
 </x-app-layout>

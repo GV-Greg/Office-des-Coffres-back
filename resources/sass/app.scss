@@ -133,26 +133,26 @@ table tbody tr th, table tbody tr td {
 
 /* Styles Grid Rewards cards */
 
-.grid-rewards-card {
+.grid-rewards-card, .activity-card {
     @apply cursor-pointer w-auto h-auto bg-blueGray-700 hover:bg-blueGray-800 text-center text-blueGray-100 shadow-md shadow-blueGray-500 border border-4 border-blueGray-700 rounded-2xl transform hover:translate-y-0.5 hover:translate-x-0.5 transition ease-in-out duration-150;
-    .grid-rewards-header {
+    .grid-rewards-header, .activity-header{
         @apply text-center;
-        .reward-destroy {
+        .reward-destroy, .activity-destroy {
             @apply absolute right-1.5 top-0.5 cursor-pointer pt-0.5 pr-1 pb-1 pl-1 rounded text-center text-red-500 hover:bg-red-500 hover:text-blueGray-800 transform hover:translate-y-0.5 hover:translate-x-0.5 transition ease-in-out duration-150;
         }
     }
-    .grid-rewards-title {
+    .grid-rewards-title, .activity-title {
         @apply text-2xl;
-        .grid-rewards-name {
+        .grid-rewards-name, .activity-name {
             @apply text-yellow-500 font-extrabold;
         }
     }
-    .grid-rewards-status {
+    .grid-rewards-status, .activity-status {
         @apply font-semibold;
     }
-    .grid-rewards-footer {
+    .grid-rewards-footer, .activity-footer {
         @apply text-sm;
-        .grid-rewards-creator {
+        .grid-rewards-creator, .activity-creator {
             @apply text-yellow-300 font-bold;
         }
     }

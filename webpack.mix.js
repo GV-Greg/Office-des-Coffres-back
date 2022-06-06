@@ -16,7 +16,7 @@ mix.setResourceRoot('../');
  */
 
 mix.js('resources/js/app.js', 'public/js')
-    .js('resources/js/components/rewards.js', 'public/js')
+    .js('resources/js/scripts.js', 'public/js')
     .sass('resources/sass/app.scss', 'public/sass')
     .options({
         postCss: [ tailwindcss('./tailwind.config.js') ],

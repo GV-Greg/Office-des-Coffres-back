@@ -5,14 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class AnimRewardsList extends Model
+class AnimCodeProposals extends Model
 {
     /**
      * The name of table.
      *
      * @var string
      */
-    protected $table = 'anim_rewards_lists';
+    protected $table = 'anim_code_proposals';
 
     /**
      * The attributes that are mass assignable.
@@ -20,10 +20,10 @@ class AnimRewardsList extends Model
      * @var array
      */
     protected $fillable = [
-        'grid_id',
-        'name',
-        'player_id',
-        'is_taken',
+        'code_id',
+        'combination',
+        'points',
+        'player'
     ];
 
     public $timestamps = false;
@@ -34,16 +34,16 @@ class AnimRewardsList extends Model
      * @var array
      */
     protected $casts = [
-        'is_taken' => 'boolean',
+        'status' => 'boolean',
     ];
 
     /**
-     * Get the grid that owns the list.
+     * Get the code of the proposal.
      *
      * @return BelongsTo
      */
-    public function grid(): BelongsTo
+    public function code(): BelongsTo
     {
-        return $this->belongsTo(AnimRewardsGrid::class, 'grid_id');
+        return $this->belongsTo(AnimCodeCodes::class, 'code_id');
     }
 }
