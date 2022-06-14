@@ -4,12 +4,11 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\API\BaseController as BaseController;
 use App\Models\User;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\ValidationException;
 
 class AuthController extends BaseController
 {
@@ -20,14 +19,23 @@ class AuthController extends BaseController
     public function register(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'username' => 'required|max:191|unique:users',
-            'email' => 'required|email|max:191|unique:users',
+            'username' => 'required|max:191',
+            'email' => 'required|email|max:191',
             'password' => 'required|min:8|max:191',
             'confirmation' => 'required|min:8|max:191|same:password'
         ]);
 
         if($validator->fails()){
             return $this->sendError('Inscription échouée.', $validator->errors());
+        }
+
+        $verif_username = User::where('username', $request->username)->exists();
+        $verif_email = User::where('email', $request->email)->exists();
+
+        if($verif_username) {
+            return $this->sendError('Compte avec pseudo déjà existant', ['username' => "Compte avec ce pseudo déjà existant."]);
+        } elseif($verif_email) {
+            return $this->sendError('Compte avec email déjà existant', ['email' => "Compte avec cet email déjà existant."]);
         }
 
         $user = User::create([
@@ -44,12 +52,12 @@ class AuthController extends BaseController
 
     /**
      * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
-    public function login(Request $request)
+    public function login(Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
-            'username' => 'required|max:191|exists:users,username',
+            'username' => 'required|max:191',
             'password' => 'required|min:8|max:191',
         ]);
 
@@ -63,8 +71,9 @@ class AuthController extends BaseController
             if($user->is_validated === true) {
                 if (Auth::attempt(['username' => $request->username, 'password' => $request->password])) {
                     $user = Auth::user();
-                    $success['token'] =  $user->createToken(config('app.name'))->accessToken;
-                    $success['username'] =  $user->username;
+                    $success['token'] = $user->createToken(config('app.name'))->accessToken;
+                    $success['username'] = $user->username;
+                    $success['roles'] = $user->getRoleNames();
                     return $this->sendResponse($success, 'Connexion réussie.');
                 } else {
                     return $this->sendError('Mot de passe incorrect', ['password' => "Le mot de passe est incorrect."]);
@@ -77,16 +86,24 @@ class AuthController extends BaseController
         }
     }
 
-    public function check()
+    /**
+     * @param string $username
+     * @return JsonResponse
+     */
+    public function check(string $username): JsonResponse
     {
-        $user = Auth::user()->first();
-        $userRoles = $user->getRoleNames();
+        $user = User::where('username', $username)->first();
+        $success['roles'] = $user->getRoleNames();
 
-        return response()->json(['success' => $user, 'userRoles' => $userRoles], 200);
+        return $this->sendResponse($success, 'Roles checkés.');
     }
 
 
-    public function logout(Request $request)
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function logout(Request $request): JsonResponse
     {
         $request->user()->token()->revoke();
 
