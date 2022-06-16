@@ -28,4 +28,9 @@
             <i class="fa-solid fa-lock"></i>
         </x-nav-link-sidebar>
     @endcan
+    @can('chick-race-crud')
+        <x-nav-link-sidebar :href="route('anim.chick-race.list')" :active="request()->is('anim/chick-race*')">
+            <i class="fa-solid fa-kiwi-bird"></i>
+        </x-nav-link-sidebar>
+    @endcan
 </nav>

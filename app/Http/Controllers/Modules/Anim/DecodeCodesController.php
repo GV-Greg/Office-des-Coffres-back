@@ -9,20 +9,20 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 
-class ActivityDecodeCodesController extends Controller
+class DecodeCodesController extends Controller
 {
     /**
      * @param Request $request
      * @return RedirectResponse
      */
-    public function create(Request $request): RedirectResponse
+    public function store(Request $request): RedirectResponse
     {
         $code = '';
         for($i=0; $i < 5; $i++) {
             $code .= strval(rand(0,9));
         }
 
-        AnimCodeCodes::create( [
+        AnimCodeCodes::create([
             'code_activity_id' => $request->code_activity_id,
             'code' => Crypt::encryptString($code),
             'status' => 0,

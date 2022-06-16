@@ -1,4 +1,3 @@
-const defaultTheme = require('tailwindcss/defaultTheme');
 const colors = require('tailwindcss/colors');
 
 module.exports = {
@@ -6,6 +5,11 @@ module.exports = {
         './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',
         './storage/framework/views/*.php',
         './resources/views/**/*.blade.php',
+    ],
+    safelist:[
+        'text-yellow-300',
+        'text-orange-300',
+        'text-gray-300',
     ],
     theme: {
         colors: {

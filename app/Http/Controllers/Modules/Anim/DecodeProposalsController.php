@@ -9,7 +9,7 @@ use App\Models\AnimCodeProposals;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 
-class ActivityDecodeProposalsController extends Controller
+class DecodeProposalsController extends Controller
 {
     /**
      * @param Request $request

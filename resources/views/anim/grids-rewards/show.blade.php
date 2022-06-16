@@ -22,7 +22,7 @@
                 <div class="text-center mt-2">
                     @if(($grid->width*$grid->height) - $rewards_count > 0)
                         {{ ($grid->width*$grid->height) - $rewards_count }} {{ __('missing rewards') }}
-                    @elseif($grid->status === "new" && $grid->status === "incomplete")
+                    @elseif($grid->status === "new" || $grid->status === "incomplete")
                        0 {{ __('missing reward') }}
                     @endif
                 </div>
@@ -78,7 +78,7 @@
                                                                 <p class="form-error">{{ $message }}</p>
                                                                 @enderror
                                                             </div>
-                                                        <!-- submit button -->
+                                                        <!-- action buttons -->
                                                             <div class="w-full mt-7 mb-5 flex justify-between">
                                                                 <button @click="openModalBox = false" class="btn btn-close mx-10">
                                                                     {{ __('Close') }}

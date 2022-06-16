@@ -3,18 +3,17 @@
 namespace App\Http\Controllers\Modules\Anim;
 
 use App\Http\Controllers\Controller;
-use App\Models\AnimCodeActivity;
-use App\Models\AnimCodeProposals;
-use Illuminate\Contracts\View\View;
+use App\Models\AnimChickRaceActivity;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\View\View;
 
-class ActivityDecodeController extends Controller
+class ChickRaceActivityController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('permission:code-crud');
+        $this->middleware('permission:chick-race-crud');
     }
 
     /**
@@ -24,9 +23,9 @@ class ActivityDecodeController extends Controller
      */
     public function index(): View
     {
-        $activities = AnimCodeActivity::all();
+        $activities = AnimChickRaceActivity::all();
 
-        return view('anim.decode.list', compact('activities'));
+        return view('anim.chick-race.list', compact('activities'));
     }
 
     /**
@@ -36,7 +35,7 @@ class ActivityDecodeController extends Controller
      */
     public function create(): View
     {
-        return view('anim.decode.create');
+        return view('anim.chick-race.create');
     }
 
     /**
@@ -48,17 +47,17 @@ class ActivityDecodeController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
-            'name' => ['required', 'string', 'min:3', 'max:190', 'unique:anim_code_activity,name']
+            'name' => ['required', 'string', 'min:3', 'max:190', 'unique:anim_chick_race_activity,name']
         ]);
 
-        $activity_id = AnimCodeActivity::insertGetId([
+        $activity_id = AnimChickRaceActivity::insertGetId([
             'name' => $request->name,
             'creator_id' => Auth::id(),
             'status' => 'new',
             'created_at' => now()
         ]);
 
-        return redirect()->route('anim.decode.show-activity', $activity_id)->with('toast_success', __('Activity created'));
+        return redirect()->route('anim.chick-race.show-activity', $activity_id)->with('toast_success', __('Activity created'));
     }
 
     /**
@@ -69,14 +68,9 @@ class ActivityDecodeController extends Controller
      */
     public function show(int $id): View
     {
-        $activity = AnimCodeActivity::where('id', $id)->with('latestCode')->first();
-        if($activity->latestCode != null) {
-            $proposals = AnimCodeProposals::where('code_id', $activity->latestCode->id)->get();
-        } else {
-            $proposals = null;
-        }
+        $activity = AnimChickRaceActivity::where('id', $id)->with('chicks')->first();
 
-        return view('anim.decode.show-activity', compact('activity', 'proposals'));
+        return view('anim.chick-race.show-activity', compact('activity'));
     }
 
     /**
@@ -87,7 +81,7 @@ class ActivityDecodeController extends Controller
      */
     public function edit(int $id): View
     {
-        return view('anim.decode.edit');
+        return view('anim.chick-race.edit');
     }
 
     /**
@@ -100,10 +94,10 @@ class ActivityDecodeController extends Controller
     public function update(Request $request, int $id): RedirectResponse
     {
         $request->validate([
-            'name' => ['required', 'string', 'min:3', 'max:190', 'unique:anim_code_activity,name,'.$id]
+            'name' => ['required', 'string', 'min:3', 'max:190', 'unique:anim_chick_race_activity,name,'.$id]
         ]);
 
-        return redirect()->route('anim.decode.show', $id)->with('toast_success', __('Activity updated'));
+        return redirect()->route('anim.chick-race.show', $id)->with('toast_success', __('Activity updated'));
     }
 
     /**
@@ -114,8 +108,17 @@ class ActivityDecodeController extends Controller
      */
     public function destroy(int $id): RedirectResponse
     {
-        AnimCodeActivity::where('id', $id)->delete();
+        AnimChickRaceActivity::where('id', $id)->delete();
 
-        return redirect()->route('anim.decode.list')->with('toast_success', __('Activity deleted'));
+        return redirect()->route('anim.chick-race.list')->with('toast_success', __('Activity deleted'));
+    }
+
+    public function start(int $id)
+    {
+        AnimChickRaceActivity::where('id', $id)->update([
+            'status' => 'launched'
+        ]);
+
+        return redirect()->route('anim.chick-race.show-activity', $id)->with('toast_success', __('Race started'));
     }
 }

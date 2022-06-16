@@ -71,7 +71,7 @@
                             <!-- Pseudo -->
                             <div>
                                 <x-label for="player" :value="__('Username')" />
-                                <x-input id="player" class="block mt-1 w-full" type="text" name="player" :value="old('player')" :placeholder="__('Enter the pseudo')" minlength="3" maxlength="30" required autofocus />
+                                <x-input id="player" class="block mt-1 w-full" type="text" name="player" :value="old('player')" :placeholder="__('Enter the username')" minlength="3" maxlength="30" required autofocus />
                                 @error('player')
                                 <p class="form-error">{{ $message }}</p>
                                 @enderror

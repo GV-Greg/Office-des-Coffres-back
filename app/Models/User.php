@@ -63,7 +63,7 @@ class User extends Authenticatable
      */
     public function grids(): HasMany
     {
-        return $this->hasMany(AnimRewardsGrid::class, 'grid_id');
+        return $this->hasMany(AnimRewardsGrid::class, 'creator_id');
     }
 
     /**
@@ -73,6 +73,16 @@ class User extends Authenticatable
      */
     public function activitiesCode(): HasMany
     {
-        return $this->hasMany(AnimCodeActivity::class, 'code_activity_id');
+        return $this->hasMany(AnimCodeActivity::class, 'creator_id');
+    }
+
+    /**
+     * Get the creator's code activity
+     *
+     * @return HasMany
+     */
+    public function activitiesChickRace(): HasMany
+    {
+        return $this->hasMany(AnimChickRaceActivity::class, 'creator_id');
     }
 }

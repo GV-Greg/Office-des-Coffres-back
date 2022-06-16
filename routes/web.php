@@ -1,9 +1,11 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\Modules\Anim\ActivityDecodeCodesController;
-use App\Http\Controllers\Modules\Anim\ActivityDecodeController;
-use App\Http\Controllers\Modules\Anim\ActivityDecodeProposalsController;
+use App\Http\Controllers\Modules\Anim\ChickRaceActivityController;
+use App\Http\Controllers\Modules\Anim\ChickRaceChicksController;
+use App\Http\Controllers\Modules\Anim\DecodeCodesController;
+use App\Http\Controllers\Modules\Anim\DecodeActivityController;
+use App\Http\Controllers\Modules\Anim\DecodeProposalsController;
 use App\Http\Controllers\Modules\Anim\RewardsGridController;
 use App\Http\Controllers\Modules\Anim\RewardsListController;
 use App\Http\Controllers\PermissionController;
@@ -61,13 +63,13 @@ Route::middleware(['auth'])->group(function(){
             /* Gestion des grilles de lots */
             Route::prefix('grid-rewards')->group( function() {
                Route::get('', [RewardsGridController::class, 'index'])->name('anim.grids.rewards.list');
-               Route::get('/add-grid', [RewardsGridController::class, 'create'])->name('anim.grid.rewards.create');
-               Route::post('/add-grid', [RewardsGridController::class, 'store'])->name('anim.grid.rewards.store');
-               Route::get('/show-grid/{id}', [RewardsGridController::class, 'show'])->name('anim.grid.rewards.show');
-               Route::get('/edit-grid/{id}', [RewardsGridController::class, 'edit'])->name('anim.grid.rewards.edit');
-               Route::post('/edit-grid/{id}', [RewardsGridController::class, 'update'])->name('anim.grid.rewards.update');
+               Route::get('/add', [RewardsGridController::class, 'create'])->name('anim.grid.rewards.create');
+               Route::post('/add', [RewardsGridController::class, 'store'])->name('anim.grid.rewards.store');
+               Route::get('/show/{id}', [RewardsGridController::class, 'show'])->name('anim.grid.rewards.show');
+               Route::get('/edit/{id}', [RewardsGridController::class, 'edit'])->name('anim.grid.rewards.edit');
+               Route::post('/edit/{id}', [RewardsGridController::class, 'update'])->name('anim.grid.rewards.update');
                 Route::get('/confirm/{id}', [RewardsGridController::class, 'confirm'])->name('anim.grid.rewards.confirm');
-                Route::delete('/delete-grid/{id}', [RewardsGridController::class, 'destroy'])->name('anim.grid.rewards.destroy');
+                Route::delete('/delete/{id}', [RewardsGridController::class, 'destroy'])->name('anim.grid.rewards.destroy');
                /* Gestion des lots */
                Route::post('/add-reward', [RewardsListController::class, 'add'])->name('anim.grid.rewards.add');
                Route::get('/draw/{id}', [RewardsListController::class, 'draw'])->name('anim.grid.rewards.draw');
@@ -77,17 +79,32 @@ Route::middleware(['auth'])->group(function(){
 
             /* Gestion du module "Décode le decode" */
             Route::prefix('decode')->group( function() {
-                Route::get('', [ActivityDecodeController::class, 'index'])->name('anim.decode.list');
-                Route::get('/add-code-activity', [ActivityDecodeController::class, 'create'])->name('anim.decode.create');
-                Route::post('/add-code-activity', [ActivityDecodeController::class, 'store'])->name('anim.decode.store');
-                Route::get('/show-code-activity/{id}', [ActivityDecodeController::class, 'show'])->name('anim.decode.show-activity');
-                Route::get('/edit-code-activity/{id}', [ActivityDecodeController::class, 'edit'])->name('anim.decode.edit');
-                Route::post('/edit-code-activity/{id}', [ActivityDecodeController::class, 'update'])->name('anim.decode.update');
-                Route::delete('/delete-code-activity/{id}', [ActivityDecodeController::class, 'destroy'])->name('anim.decode.destroy');
+                Route::get('', [DecodeActivityController::class, 'index'])->name('anim.decode.list');
+                Route::get('/add', [DecodeActivityController::class, 'create'])->name('anim.decode.create');
+                Route::post('/add', [DecodeActivityController::class, 'store'])->name('anim.decode.store');
+                Route::get('/show/{id}', [DecodeActivityController::class, 'show'])->name('anim.decode.show-activity');
+                Route::get('/edit/{id}', [DecodeActivityController::class, 'edit'])->name('anim.decode.edit');
+                Route::post('/edit/{id}', [DecodeActivityController::class, 'update'])->name('anim.decode.update');
+                Route::delete('/delete/{id}', [DecodeActivityController::class, 'destroy'])->name('anim.decode.destroy');
                 /* Gestion du code */
-                Route::post('/create-code', [ActivityDecodeCodesController::class, 'create'])->name('anim.decode.create.code');
-                Route::get('/show-code/{id}', [ActivityDecodeCodesController::class, 'show'])->name('anim.decode.show-code');
-                Route::post('/verify/{id}', [ActivityDecodeProposalsController::class, 'verify'])->name('anim.decode.verify');
+                Route::post('/create-code', [DecodeCodesController::class, 'store'])->name('anim.decode.create.code');
+                Route::get('/show-code/{id}', [DecodeCodesController::class, 'show'])->name('anim.decode.show-code');
+                Route::post('/verify/{id}', [DecodeProposalsController::class, 'verify'])->name('anim.decode.verify');
+            });
+
+            /*  Gestion du module "Course de poussins" */
+            Route::prefix('chick-race')->group( function() {
+                Route::get('', [ChickRaceActivityController::class, 'index'])->name('anim.chick-race.list');
+                Route::get('/add', [ChickRaceActivityController::class, 'create'])->name('anim.chick-race.create');
+                Route::post('/add', [ChickRaceActivityController::class, 'store'])->name('anim.chick-race.store');
+                Route::get('/show/{id}', [ChickRaceActivityController::class, 'show'])->name('anim.chick-race.show-activity');
+                Route::get('/edit/{id}', [ChickRaceActivityController::class, 'edit'])->name('anim.chick-race.edit');
+                Route::post('/edit/{id}', [ChickRaceActivityController::class, 'update'])->name('anim.chick-race.update');
+                Route::delete('/delete/{id}', [ChickRaceActivityController::class, 'destroy'])->name('anim.chick-race.destroy');
+                Route::get('/start/{id}', [ChickRaceActivityController::class, 'start'])->name('anim.chick-race.start');
+                /* Gestion des poussins */
+                Route::post('/create-chick', [ChickRaceChicksController::class, 'store'])->name('anim.chick-race.create-chick');
+                Route::post('/update-chick/{id}', [ChickRaceChicksController::class, 'update'])->name('anim.chick-race.update-chick');
             });
         });
 
