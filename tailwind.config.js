@@ -7,9 +7,10 @@ module.exports = {
         './resources/views/**/*.blade.php',
     ],
     safelist:[
-        'text-yellow-300',
-        'text-orange-300',
-        'text-gray-300',
+        { pattern: /text-(gray|yellow|salmon|teal|blueGray|blue|red|orange|lime|green|cyan|indigo|pink)-(100|200|300|400|500|600|700|800|900)/, },
+        { pattern: /ring-offset-(gray|yellow|salmon|teal|blueGray|blue|red|orange|lime|green|cyan|indigo|pink)-(100|200|300|400|500|600|700|800|900)/, },
+        { pattern: /ring-(gray|yellow|salmon|teal|blueGray|blue|red|orange|lime|green|cyan|indigo|pink)-(100|200|300|400|500|600|700|800|900)/, },
+        { pattern: /bg-(gray|yellow|salmon|teal|blueGray|blue|red|orange|lime|green|cyan|indigo|pink)-(100|200|300|400|500|600|700|800|900)/, },
     ],
     theme: {
         colors: {
