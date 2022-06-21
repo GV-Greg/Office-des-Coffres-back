@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Crypt;
 
 class AnimCodeCodes extends Model
 {
@@ -24,6 +25,15 @@ class AnimCodeCodes extends Model
         'code_activity_id',
         'code',
         'status'
+    ];
+
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'status' => 'boolean',
     ];
 
     /**

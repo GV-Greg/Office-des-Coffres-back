@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        {{ __('The activity code') }} "{{ $activity->name }}"
+{{--        {{ __('The activity code') }} "{{ $activity->name }}"--}}
     </x-slot>
 
     <x-content-card>
@@ -19,7 +19,7 @@
                     <span class="font-bold ">{{ __('Mystery codes already discovered') }} :</span>
                     <ul>
                         @foreach($activity->codes as $code)
-                            @if($code->status === 1)
+                            @if($code->status === true)
                                 <li><i class="fa-solid fa-unlock-keyhole"></i>
                                     <a href="{{ route('anim.decode.show-code', $code->id) }}"
                                        class="font-bold text-blue-500 hover:text-orange-500">

@@ -35,6 +35,7 @@ class AnimCodeProposals extends Model
      */
     protected $casts = [
         'status' => 'boolean',
+        'points' => 'integer'
     ];
 
     /**

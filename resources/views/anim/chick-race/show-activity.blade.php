@@ -13,6 +13,7 @@
                     <a href="{{ route('anim.chick-race.start', $activity->id) }}" class="ml-4 btn btn-primary" >{{ __('Start the race') }}</a>
                 @elseif($activity->status === "launched")
                     <span class="bg-blue-700 rounded py-1 px-2">{{ __('Race in progress') }}</span>
+                    <a href="{{ route('anim.chick-race.interrupt', $activity->id) }}" class="ml-4 btn btn-primary" >{{ __('Interrupt the race') }}</a>
                 @else
                     <span class="bg-green-700 rounded py-1 px-2">{{ __('Activity closed') }}</span>
                 @endif
@@ -108,12 +109,12 @@
                                                     <div class="modal-container">
                                                         <div class="modal">
                                                             <h3 class="modal-title">
-                                                                {{ __('Changing the chick\'s position') }}
+                                                                {{ __('Changing the position for') }} {{ $chick->name_chick }}
                                                             </h3>
                                                             <div class="modal-form mt-2">
                                                                 <form method="POST" action="{{ route('anim.chick-race.update-chick', $chick->id) }}" class="flex flex-col justify-center items-center">
                                                                     @csrf
-                                                                    <div class="flex flex-row">
+                                                                    <div class="w-full flex flex-row px-2">
                                                                         <!-- Position X -->
                                                                         <div class="w-2/3 mr-2">
                                                                             <x-label for="position_x" :value="__('x-position')" />

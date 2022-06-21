@@ -102,6 +102,7 @@ Route::middleware(['auth'])->group(function(){
                 Route::post('/edit/{id}', [ChickRaceActivityController::class, 'update'])->name('anim.chick-race.update');
                 Route::delete('/delete/{id}', [ChickRaceActivityController::class, 'destroy'])->name('anim.chick-race.destroy');
                 Route::get('/start/{id}', [ChickRaceActivityController::class, 'start'])->name('anim.chick-race.start');
+                Route::get('/interrupt/{id}', [ChickRaceActivityController::class, 'interrupt'])->name('anim.chick-race.interrupt');
                 /* Gestion des poussins */
                 Route::post('/create-chick', [ChickRaceChicksController::class, 'store'])->name('anim.chick-race.create-chick');
                 Route::post('/update-chick/{id}', [ChickRaceChicksController::class, 'update'])->name('anim.chick-race.update-chick');

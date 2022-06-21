@@ -121,4 +121,13 @@ class ChickRaceActivityController extends Controller
 
         return redirect()->route('anim.chick-race.show-activity', $id)->with('toast_success', __('Race started'));
     }
+
+    public function interrupt(int $id)
+    {
+        AnimChickRaceActivity::where('id', $id)->update([
+            'status' => 'prepared'
+        ]);
+
+        return redirect()->route('anim.chick-race.show-activity', $id)->with('toast_success', __('Race interrupted'));
+    }
 }

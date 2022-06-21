@@ -844,14 +844,16 @@
     "Enter the chick's name": "Entrer le nom du poussin",
     "Create a chick": "Créer un poussin",
     "Chick created": "Poussin créé",
-    "Start the race": "Débuter la course",
+    "Start the race": "(Re)lancer la course",
     "Race in preparation": "Course en préparation",
-    "Race started": "Course lancée",
+    "Race started": "Course (re)lancée",
     "Race in progress": "Course en cours",
-    "Changing the chick's position": "Modifier la position du poussin",
+    "Changing the position for": "Modifier la position pour",
     "x-position": "position X",
     "New x-position": "Nouvelle position X",
     "y-position": "position Y",
     "New y-position": "Nouvelle position Y",
-    "Position updated": "Position modifiée"
+    "Position updated": "Position modifiée",
+    "Interrupt the race": "Interrompre la course",
+    "Race interrupted": "Course interrompue"
 }

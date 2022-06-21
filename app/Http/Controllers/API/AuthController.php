@@ -93,6 +93,7 @@ class AuthController extends BaseController
     public function check(string $username): JsonResponse
     {
         $user = User::where('username', $username)->first();
+        $success['user'] = $user->username;
         $success['roles'] = $user->getRoleNames();
 
         return $this->sendResponse($success, 'Roles checkés.');
