@@ -13,6 +13,7 @@ class RewardsGridActivityController extends BaseController
         $grid = AnimRewardsGrid::where('name', $name)->with('rewards')->first();
         $activity['grid'] = AnimRewardsGrid::where('name', $name)->first();
         $activity['rewards'] = collect($grid->rewards->sortBy('place')->values()->all());
+        $activity['rewardsPerPlayer'] = collect($grid->rewards->whereNotNull('player')->sortBy('player')->values()->all())->groupBy('player');
 
         return $this->sendResponse($activity, 'Grille téléchargée.');
     }
